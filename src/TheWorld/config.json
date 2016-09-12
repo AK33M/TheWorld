@@ -4,5 +4,9 @@
   },
   "ConnectionStrings": {
     "WorldContextConnection": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=TheWorldDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+  },
+  "Keys": {
+    "BingKey": "DONTEVERPUTKEYSINSOURCECONTROL",
+    "GoogleKey": "DONTEVERPUTKEYSINSOURCECONTROL"
   }
 }

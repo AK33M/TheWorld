@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using TheWorld.Models;
 using TheWorld.Services;
+using TheWorld.ViewModels;
 
 namespace TheWorld
 {
@@ -41,6 +43,7 @@ namespace TheWorld
 
             services.AddDbContext<WorldContext>();
             services.AddScoped<IWorldRepository, WorldRepository>();
+            services.AddTransient<IGeoCoordsService, BingGeoCoordsService>();
             services.AddTransient<WorldContextSeedData>();
             services.AddLogging();
             services.AddMvc();
@@ -50,6 +53,13 @@ namespace TheWorld
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, WorldContextSeedData seeder)
         {
             loggerFactory.AddConsole();
+            Mapper.Initialize(config =>
+            {
+                config.CreateMap<TripViewModel, Trip>()
+                    .ForMember(dest => dest.DateCreated, opt => opt.MapFrom(src => src.Created)).ReverseMap();
+                config.CreateMap<StopViewModel, Stop>().ReverseMap();
+            });
+
 
             if (_env.IsDevelopment())
             {
