@@ -1,8 +1,8 @@
 ﻿//site.js
 (function () {
 
-    var ele = $("#username");
-    ele.text("Akeem Taiwo");
+    //var ele = $("#username");
+    //ele.text("Akeem Taiwo");
 
     var main = $("#main");
     main.on("mouseenter", function () {

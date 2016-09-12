@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using TheWorld.Models;
 using TheWorld.Services;
@@ -13,6 +13,7 @@ using TheWorld.ViewModels;
 namespace TheWorld.Controllers.Api
 {
     [Route("/api/trips/{tripName}/stops")]
+    [Authorize]
     public class StopsController : Controller
     {
         private IGeoCoordsService _coordsService;
@@ -33,7 +34,7 @@ namespace TheWorld.Controllers.Api
         {
             try
             {
-                var trip = _repo.GetTripByName(tripName);
+                var trip = _repo.GetTripByName(tripName, User.Identity.Name);
 
                 return Ok(Mapper.Map<IEnumerable<StopViewModel>>(trip.Stops.OrderBy(s => s.Order).ToList()));
             }
@@ -64,7 +65,7 @@ namespace TheWorld.Controllers.Api
                         newStop.Latitude = result.Latitude;
                         newStop.Longitude = result.Longitude;
 
-                        _repo.AddStop(tripName, newStop);
+                        _repo.AddStop(tripName, newStop, User.Identity.Name);
 
                         if (await _repo.SaveChangesAsync())
                         {

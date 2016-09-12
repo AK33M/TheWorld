@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using TheWorld.ViewModels;
 namespace TheWorld.Controllers.Api
 {
     [Route("api/trips")]
+    [Authorize]
     public class TripsController : Controller
     {
         private ILogger<TripsController> _logger;
@@ -25,9 +27,9 @@ namespace TheWorld.Controllers.Api
         {
             try
             {
-                var results = _repo.GetAllTrips();
+                var trips = _repo.GetUserTripsWithStops(User.Identity.Name);
 
-                return Ok(Mapper.Map<IEnumerable<TripViewModel>>(results));
+                return Ok(Mapper.Map<IEnumerable<TripViewModel>>(trips));
             }
             catch (System.Exception ex)
             {
@@ -44,6 +46,9 @@ namespace TheWorld.Controllers.Api
             {
                 //Save to the DB
                 var newTrip = Mapper.Map<Trip>(theTrip);
+
+                newTrip.Username = User.Identity.Name;
+
                 _repo.AddTrip(newTrip);
 
                 if(await _repo.SaveChangesAsync())
