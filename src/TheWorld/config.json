@@ -1,5 +1,8 @@
 {
   "MailSettings": {
-    "ToAddress":  "abc@abc.com"
+    "ToAddress": "abc@abc.com"
+  },
+  "ConnectionStrings": {
+    "WorldContextConnection": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=TheWorldDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
   }
 }
