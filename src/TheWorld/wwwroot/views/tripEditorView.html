@@ -1,0 +1,49 @@
+﻿<div>
+    <div><a href="#/" class="btn btn-sm btn-default"><i class="fa fa-angle-left"></i> Back</a></div>
+    <div class="col-md-3">
+        <h2>{{vm.tripName}}</h2>
+        <wait-cursor display-when="vm.isBusy"></wait-cursor>
+        <div class="alert alert-danger" ng-show="vm.errorMessage">{{vm.errorMessage}}</div>
+        <form novalidate name="newStopForm" ng-submit="vm.addStop()">
+            <div class="form-group">
+                <label>Date</label>
+                <input class="form-control" 
+                       id="arrival"
+                       name="arrival" 
+                       ng-model="vm.newStop.arrival" 
+                       required 
+                       ng-pattern="/^(19|20)\d\d[- /.](0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])$/"/>
+            </div>
+            <div class="help-block has-error text-muted" ng-show="newStopForm.arrival.$dirty" ng-messages="newStopForm.arrival.$error">
+                <p ng-message="required">Stop Date is required.</p>
+                <p ng-message="pattern">Invalid date pattern. Must be in format YYYY/MM/DD</p>
+            </div>
+            <div class="form-group">
+                <label>Location</label>
+                <input class="form-control" id="name" name="name" ng-model="vm.newStop.name" ng-minlength="5" required/>
+            </div>
+            <div class="help-block has-error text-muted" ng-show="newStopForm.location.$dirty" ng-messages="newStopForm.location.$error">
+                <p ng-message="required">Stop Name is required.</p>
+                <p ng-message="minlength">Stop Name is too short.</p>
+            </div>
+            <div>
+                <input type="submit" value="Add" class="btn btn-success" ng-disabled="newStopForm.$invalid"/>
+            </div>
+        </form>
+        <table class="table table-responsive table-striped">
+            <tr>
+                <th>Location</th>
+                <th>Arrival</th>
+            </tr>
+            <tr ng-repeat="stop in vm.stops">
+                <td>{{stop.name}}</td>
+                <td>{{stop.arrival | date:shortDate}}</td>
+            </tr>
+        </table>
+
+    </div>
+    <div class="col-md-9">
+        <h2>The Map</h2>
+        <div id="map"></div>
+    </div>
+</div>

@@ -47,13 +47,13 @@ namespace TheWorld.Controllers.Api
         }
 
         [HttpPost("")]
-        public  async Task<IActionResult> Post(string tripName, [FromBody]StopViewModel model)
+        public  async Task<IActionResult> Post(string tripName, [FromBody]StopViewModel vm)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var newStop = Mapper.Map<Stop>(model);
+                    var newStop = Mapper.Map<Stop>(vm);
 
                     var result = await _coordsService.GetCoordsAsync(newStop.Name);
                     if (!result.Success)

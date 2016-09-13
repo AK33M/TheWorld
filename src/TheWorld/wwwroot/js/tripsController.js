@@ -8,14 +8,7 @@
 
     function tripsController($http) {
         var vm = this;
-        vm.trips = [{
-            name: "US Trip",
-            created: new Date()
-        }, {
-
-            name: "World Trip",
-            created: new Date()
-        }];
+        vm.trips = [];
 
         vm.newTrip = {};
         vm.errorMessage = "";

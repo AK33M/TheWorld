@@ -35,16 +35,18 @@ namespace TheWorld.Controllers.Web
         [Authorize]
         public IActionResult Trips()
         {
-            try
-            {
-                var data = _repo.GetAllTrips();
-                return View(data);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Failed to get trips in Index page: {ex.Message}");
-                return Redirect("/error");
-            }
+            ViewBag.ApiKey = _config["Keys:GoogleKey"];
+            return View();
+            //try
+            //{
+            //    var data = _repo.GetAllTrips();
+            //    return View(data);
+            //}
+            //catch (Exception ex)
+            //{
+            //    _logger.LogError($"Failed to get trips in Index page: {ex.Message}");
+            //    return Redirect("/error");
+            //}
 
         }
 
