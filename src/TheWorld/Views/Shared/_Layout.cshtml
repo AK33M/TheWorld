@@ -15,7 +15,7 @@
             <img class="headshot" src="~/img/samharris.jpg" alt="headshot" />
             <span id="username">@User.Identity.Name</span>
         }
-       
+
         <ul class="nav">
             <li class="active"><a asp-controller="App" asp-action="Index">Home</a></li>
             <li><a asp-controller="App" asp-action="About">About</a></li>
@@ -68,7 +68,12 @@
     </div>
     <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="~/js/site.js"></script>
+    <environment names="Development">
+        <script type="text/javascript" src="~/js/site.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script type="text/javascript" src="~/lib/_app/site.js"></script>
+    </environment>
     @RenderSection("scripts", false)
 </body>
 </html>
